@@ -8,21 +8,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// Datos de los estudiantes (puedes modificar estos valores)
-const students = {
-    1: {
-        name: "Maria Jose",
-        lastName: "Palomino Carreño",
-        email: "mariapalca@unisabana.edu.co",
-        id: "0000321271"
-    },
-    2: {
-        name: "Samuel",
-        lastName: "Arcos",
-        email: "nose@unisabana.edu.co",
-        id: "0000"
-    }
-};
+const user1 = [{name: "Maria Jose", lastName: "Palomino Carreño", email: "mariapalca@unisabana.edu.co", id: "0000321271"}];
+const user2 = [{name: "Samuel", lastName: "Guerrero Arcos", email: "samuelguar@unisabana.edu.co", id: "0000323500"}];
 
 // Ruta principal
 app.get("/", (req, res) => {
@@ -34,21 +21,16 @@ app.get("/", (req, res) => {
     });
 });
 
-// Tu endpoint actual de user-info
-app.get("/user-info/:id", (req, res) => {
-    const studentId = req.params.id;
+app.get('/user-info/:id', (req, res) => {
+    const id = parseInt(req.params.id);
     
-    if (students[studentId]) {
-        res.json(students[studentId]);
+    if (id === 1) {
+        res.json(user1);
+    } else if (id === 2) {
+        res.json(user2);
     } else {
-        res.status(404).json({ error: "Estudiante no encontrado" });
+        res.status(404).json({error:"404 Usuario no encontrado"});
     }
 });
 
-// Iniciar el servidor localmente
-app.listen(port, () => {
-    console.log(`Servidor en ejecución en http://localhost:${port}`);
-});
-
-// Exportar el servidor para Vercel
 module.exports = app;
